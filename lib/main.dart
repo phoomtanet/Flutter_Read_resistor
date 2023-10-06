@@ -55,6 +55,7 @@ class _MyHomePageState1 extends State<Resiter3> {
   String sum = '';
   String convertedSum = '0';
   String countzero = '';
+  bool light = false; // สถานะเริ่มต้นของสวิตช์
 
   Color empcoler = const Color.fromARGB(255, 208, 205, 205);
   Color black = const Color.fromARGB(253, 0, 0, 0);
@@ -97,43 +98,7 @@ class _MyHomePageState1 extends State<Resiter3> {
     slcolorBars.add(ColorBar(315, 370, 35, 75, silver, 10));
 
     emptySpace = colorBars[0];
-
     draggedCard = slcolorBars[0];
-  }
-
-  bool light = false; // สถานะเริ่มต้นของสวิตช์
-
-  void _toggleLight() {
-    setState(() {
-      light = !light;
-    });
-    if (light) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (context) =>
-                const Resisster4(title: 'Calculated resistor')),
-        (route) => false, // Remove all routes except for the new one
-      );
-    }
-  }
-
-  void _reset() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (BuildContext context) => const Resisster4(
-                title: 'Calculated resistor',
-              )),
-    );
-  }
-
-  void _game3() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const Game3(title: 'Mini Game'),
-      ),
-      (route) => true, // Remove all routes except for the new one
-    );
   }
 
   @override
@@ -145,6 +110,49 @@ class _MyHomePageState1 extends State<Resiter3> {
       ),
       body: Stack(
         children: [
+          Positioned(
+            top: 5,
+            left: 10,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Switch(
+                  value: light,
+                  onChanged: (value) {
+                    _toggleLight();
+                  },
+                  activeTrackColor: const Color.fromARGB(
+                      255, 33, 226, 243), // กำหนดสีเส้นติดตามเมื่อสวิตช์เปิด
+                  inactiveTrackColor: const Color.fromARGB(255, 236, 205, 6),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+              top: 80.0,
+              left: 90,
+              child: Container(
+                width: 202,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(
+                      255, 255, 255, 255), // สีพื้นหลังของ Container
+                  borderRadius:
+                      BorderRadius.circular(20), // กำหนดขอบโค้งของ Container
+                ),
+                child: Center(
+                  child: Text(
+                    convertedSum +
+                        ' Ω  ± ' +
+                        colorBars[3].number.toString() +
+                        '% ',
+                    style: const TextStyle(
+                      fontSize: 22.0, // ขนาดฟอนต์
+                      color: Colors.black, // สีข้อความ
+                    ),
+                  ),
+                ),
+              )),
           Positioned(
             top: 150,
             left: 15,
@@ -168,105 +176,14 @@ class _MyHomePageState1 extends State<Resiter3> {
             ),
           ),
           Positioned(
-            top: 550,
-            left: 120,
-            child: Container(
-              child: ElevatedButton(
-                onPressed: () {
-                  // โค้ดเมื่อปุ่มถูกกด
-                  _game3();
-                },
-
-                // สร้างปุ่มด้วย ElevatedButton
-                child: Text('ทำแบบทดสอบ'),
-                // หรือเพิ่มข้อความของปุ่ม
-              ),
-            ),
-          ),
-          Positioned(
             top: 160,
             left: 15,
-            child: Container(
-              child: Image.asset(
-                'assets/image/3resister3.png',
-                height: 110,
-              ),
+            child: Image.asset(
+              'assets/image/3resister3.png',
+              height: 110,
             ),
           ),
-          Positioned(
-            top: 5,
-            left: 10,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Switch(
-                    value: light,
-                    onChanged: (value) {
-                      _toggleLight();
-                    },
-                    activeTrackColor: Color.fromARGB(
-                        255, 33, 226, 243), // กำหนดสีเส้นติดตามเมื่อสวิตช์เปิด
-                    inactiveTrackColor: Color.fromARGB(255, 236, 205, 6),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-              top: 80.0,
-              left: 90,
-              child: Container(
-                width: 202,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(
-                      255, 255, 255, 255), // สีพื้นหลังของ Container
-                  borderRadius:
-                      BorderRadius.circular(20), // กำหนดขอบโค้งของ Container
-                ),
-                child: Center(
-                  child: Text(
-                    convertedSum +
-                        ' Ω  ± ' +
-                        colorBars[3].number.toString() +
-                        '% ',
-                    style: const TextStyle(
-                      fontSize: 22.0, // ขนาดฟอนต์
-                      color: Colors.black, // สีข้อความ
-                    ),
-                  ),
-                ),
-              )),
-          for (int index = 0; index < colorBars.length; index++)
-            Positioned(
-              top: 265,
-              left: colorBars[index].pointX,
-              child: Container(
-                width: 25,
-                height: 25,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(
-                      182, 252, 251, 251), // สีพื้นหลังของ Container
-                  borderRadius:
-                      BorderRadius.circular(10.0), // กำหนดขอบโค้งของ Container
-                  border: Border.all(
-                    color: Colors.black, // สีขอบ
-                    width: 0.5, // ความหนาขอบ
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    colorBars[index].number.toString(),
-                    style: const TextStyle(
-                      color: Color.fromARGB(
-                          255, 9, 9, 9), // เพิ่มเงื่อนไขสีข้อความ
-                      fontSize: 16.0, // ขนาดข้อความ
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          
           for (int index = 0; index < colorBars.length; index++)
             Positioned(
               top: colorBars[index].pointY,
@@ -302,13 +219,12 @@ class _MyHomePageState1 extends State<Resiter3> {
                         ),
                       );
 
-                      Future.delayed(Duration(seconds: 2), () {
+                      Future.delayed(const Duration(seconds: 2), () {
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       });
                     }
                   }
 
-                  // Check if index is less than 10
                   if (index < 3) {
                     if (data != null &&
                         (data.colorscor == gold || data.colorscor == silver)) {
@@ -333,12 +249,10 @@ class _MyHomePageState1 extends State<Resiter3> {
                 onAccept: (dropColer) {
                   if (draggedCard != null) {
                     setState(() {
-                      final colerchang = dropColer.colorscor;
-                      final numberchang = dropColer.number;
-                      colorBars[index].colorscor = colerchang; //เปลี่ยนสี
-                      colorBars[index].number = numberchang; //เปลี่ยนเลข
-                      countzero =
-                          convertToZeroPaddedString(colorBars[2].number);
+                      colorBars[index].colorscor = dropColer.colorscor;
+                      colorBars[index].number = dropColer.number;
+
+                      countzero = convertToZeroString(colorBars[2].number);
 
                       sum = (colorBars[0].number == 0
                               ? ''
@@ -353,31 +267,60 @@ class _MyHomePageState1 extends State<Resiter3> {
                               ? ''
                               : countzero);
 
-                      convertedSum = convertToDesiredUnit(sum);
+                      convertedSum = convertToUnit(sum);
                     });
                   }
                 },
+              ),
+            ),
+            for (int index = 0; index < colorBars.length; index++)
+            Positioned(
+              top: 265,
+              left: colorBars[index].pointX,
+              child: Container(
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(
+                      182, 252, 251, 251), 
+                  borderRadius:
+                      BorderRadius.circular(10.0), 
+                  border: Border.all(
+                    color: Colors.black, 
+                    width: 0.5, 
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    colorBars[index].number.toString(),
+                    style: const TextStyle(
+                      color: Color.fromARGB(
+                          255, 9, 9, 9), 
+                      fontSize: 16.0, 
+                    ),
+                  ),
+                ),
               ),
             ),
           Positioned(
             top: 320,
             left: 20,
             child: Container(
-              width: 220, // กำหนดความกว้างของ Container
-              height: 180, // กำหนดความสูงของ Container
+              width: 220,
+              height: 180, 
               decoration: BoxDecoration(
-                color: Color.fromARGB(
-                    255, 247, 247, 247), // สีพื้นหลังของ Container
+                color: const Color.fromARGB(
+                    255, 247, 247, 247), 
                 borderRadius:
-                    BorderRadius.circular(10.0), // กำหนดขอบโค้งของ Container
+                    BorderRadius.circular(10.0), 
                 border: Border.all(
-                  color: Colors.black, // สีขอบ
-                  width: 1, // ความหนาขอบ
+                  color: Colors.black, 
+                  width: 1, 
                 ),
               ),
               child: const Align(
                 alignment:
-                    Alignment.topCenter, // จัดตำแหน่งข้อความด้านบนตรงกลาง
+                    Alignment.topCenter, 
                 child: Text(
                   'COLOR BAR',
                   style: TextStyle(
@@ -392,23 +335,23 @@ class _MyHomePageState1 extends State<Resiter3> {
             top: 320,
             left: 250,
             child: Container(
-              width: 115, // กำหนดความกว้างของ Container
-              height: 180, // กำหนดความสูงของ Container
+              width: 115, 
+              height: 180, 
               decoration: BoxDecoration(
-                color: Color.fromARGB(
-                    255, 250, 250, 250), // สีพื้นหลังของ Container
+                color: const Color.fromARGB(
+                    255, 250, 250, 250), 
                 borderRadius:
-                    BorderRadius.circular(10.0), // กำหนดขอบโค้งของ Container
+                    BorderRadius.circular(10.0), 
                 border: Border.all(
-                  color: Colors.black, // สีขอบ
-                  width: 1, // ความหนาขอบ
+                  color: Colors.black, 
+                  width: 1, 
                 ),
               ),
               child: const Align(
                 alignment:
                     Alignment.topCenter, // จัดตำแหน่งข้อความด้านบนตรงกลาง
                 child: Text(
-                  '%Error',
+                  '%ERROR',
                   style: TextStyle(
                     color: Color.fromARGB(255, 6, 6, 6),
                     fontSize: 16,
@@ -427,24 +370,21 @@ class _MyHomePageState1 extends State<Resiter3> {
                   width: slcolorBars[index].widthColorBar - 5,
                   height: slcolorBars[index].heightColorBar + 20,
                   decoration: BoxDecoration(
-                    color:
-                        slcolorBars[index].colorscor, // สีพื้นหลังของ Container
-                    borderRadius: BorderRadius.circular(
-                        10.0), // กำหนดขอบโค้งของ Container
+                    color: slcolorBars[index].colorscor,
+                    borderRadius: BorderRadius.circular(10.0),
                     border: Border.all(
-                      color: Colors.black, // สีขอบ
-                      width: 3, // ความหนาขอบ
+                      color: Colors.black,
+                      width: 3,
                     ),
                   ),
-                  // ignore: sort_child_properties_last
                   child: Center(
                     child: Text(
                       slcolorBars[index].number.toString(),
                       style: TextStyle(
                         color: slcolorBars[index].number == 0
                             ? Colors.white
-                            : Colors.black, // เพิ่มเงื่อนไขสีข้อความ
-                        fontSize: 16.0, // ขนาดข้อความ
+                            : Colors.black,
+                        fontSize: 16.0,
                       ),
                     ),
                   ),
@@ -455,11 +395,10 @@ class _MyHomePageState1 extends State<Resiter3> {
                   decoration: BoxDecoration(
                     color:
                         slcolorBars[index].colorscor, // สีพื้นหลังของ Container
-                    borderRadius:
-                        BorderRadius.circular(2), // กำหนดขอบโค้งของ Container
+                    borderRadius: BorderRadius.circular(2),
                     border: Border.all(
-                      color: Colors.black, // สีขอบ
-                      width: 1.5, // ความหนาขอบ
+                      color: Colors.black,
+                      width: 1.5,
                     ),
                   ),
                   child: Center(
@@ -468,25 +407,66 @@ class _MyHomePageState1 extends State<Resiter3> {
                       style: TextStyle(
                         color: slcolorBars[index].number == 0
                             ? Colors.white
-                            : Colors.black, // เพิ่มเงื่อนไขสีข้อความ
-                        fontSize: 16.0, // ขนาดข้อความ
+                            : Colors.black,
+                        fontSize: 16.0,
                       ),
                     ),
                   ),
                 ),
               ),
             ),
+          Positioned(
+            top: 550,
+            left: 120,
+            child: ElevatedButton(
+              onPressed: () {
+                _game3();
+              },
+              child: const Text('ทำแบบทดสอบ'),
+            ),
+          ),
         ],
       ),
     );
   }
+
+  void _toggleLight() {
+    setState(() {
+      light = !light;
+    });
+    if (light) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (context) =>
+                const Resisster4(title: 'Calculated resistor')),
+        (route) => false, // Remove all routes except for the new one
+      );
+    }
+  }
+
+  void _reset() {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Resiter3(title: 'Calculated resistor'),
+        ));
+  }
+
+  void _game3() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => const Game3(title: 'Mini Game'),
+      ),
+      (route) => true, // Remove all routes except for the new one
+    );
+  }
 }
 
-String convertToZeroPaddedString(int number) {
+String convertToZeroString(int number) {
   return '0' * number;
 }
 
-String convertToDesiredUnit(String input) {
+String convertToUnit(String input) {
   double? value = double.tryParse(input);
 
   if (value != null) {

@@ -56,7 +56,7 @@ class _MyHomePageState extends State<Resisster4> {
   String convertedSum = '0';
   String countzero = '';
 
-  int selectedResistorType = 0;
+  bool light = true;
 
   Color empcoler = const Color.fromARGB(255, 208, 205, 205);
   Color black = const Color.fromARGB(253, 0, 0, 0);
@@ -76,7 +76,6 @@ class _MyHomePageState extends State<Resisster4> {
   @override
   void initState() {
     super.initState();
-    //  this.pointX,this.pointY,this.widthColorBar,this.heightColorBar,
     colorBars.add(ColorBar(100, 154 + 20, 22, 84.5, black, 0));
     colorBars.add(ColorBar(140, 162 + 20, 22, 69, black, 0));
     colorBars.add(ColorBar(175, 162 + 20, 22, 69, black, 0));
@@ -102,40 +101,6 @@ class _MyHomePageState extends State<Resisster4> {
     draggedCard = slcolorBars[0];
   }
 
-  bool light = true; // สถานะเริ่มต้นของสวิตช์
-
-  void _toggleLight() {
-    setState(() {
-      light = light;
-    });
-    if (light) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (context) => const Resiter3(title: 'Calculated resistor')),
-        (route) => false, // Remove all routes except for the new one
-      );
-    }
-  }
-
-  void _reset() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (BuildContext context) => const Resisster4(
-                title: 'Calculated resistor',
-              )),
-    );
-  }
-
-  void _game4() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const Game4(title: 'Mini Geme'),
-      ),
-      (route) => true, // Remove all routes except for the new one
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,69 +113,19 @@ class _MyHomePageState extends State<Resisster4> {
           Positioned(
             left: 10,
             top: 5,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Switch(
-                    value: light,
-                    onChanged: (value) {
-                      _toggleLight();
-                    },
-                    activeTrackColor: const Color.fromARGB(
-                        255, 33, 226, 243), // กำหนดสีเส้นติดตามเมื่อสวิตช์เปิด
-                    inactiveTrackColor: Color.fromARGB(255, 236, 205, 6),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 160,
-            left: 15,
-            child: Container(
-              child: Image.asset(
-                'assets/image/4resister4.png',
-                height: 110,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 150,
-            left: 15,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255), // สีพื้นหลังของปุ่ม
-                shape: BoxShape
-                    .circle, // กำหนดรูปร่างของพื้นหลัง (ในกรณีนี้ใช้วงกลม)
-              ),
-              child: IconButton(
-                onPressed: () {
-                  // โค้ดเมื่อปุ่มถูกกด
-                  _reset();
-                },
-                icon: const Icon(
-                  Icons.history, // เลือกไอคอนที่คุณต้องการ
-                  color: Color.fromARGB(255, 38, 38, 40), // สีของไอคอน
-                  size: 25, // ขนาดของไอคอน
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Switch(
+                  value: light,
+                  onChanged: (value) {
+                    _toggleLight();
+                  },
+                  activeTrackColor: const Color.fromARGB(
+                      255, 33, 226, 243), // กำหนดสีเส้นติดตามเมื่อสวิตช์เปิด
+                  inactiveTrackColor: const Color.fromARGB(255, 236, 205, 6),
                 ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 550,
-            left: 120,
-            child: Container(
-              child: ElevatedButton(
-                onPressed: () {
-                  // โค้ดเมื่อปุ่มถูกกด
-                  _game4();
-                },
-
-                // สร้างปุ่มด้วย ElevatedButton
-                child: Text('ทำแบบทดสอบ'),
-                // หรือเพิ่มข้อความของปุ่ม
-              ),
+              ],
             ),
           ),
           Positioned(
@@ -238,35 +153,34 @@ class _MyHomePageState extends State<Resisster4> {
                   ),
                 ),
               )),
-          for (int index = 0; index < colorBars.length; index++)
-            Positioned(
-              top: 265,
-              left: colorBars[index].pointX,
-              child: Container(
-                width: 25,
-                height: 25,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(
-                      182, 252, 251, 251), // สีพื้นหลังของ Container
-                  borderRadius:
-                      BorderRadius.circular(10.0), // กำหนดขอบโค้งของ Container
-                  border: Border.all(
-                    color: Colors.black, // สีขอบ
-                    width: 0.5, // ความหนาขอบ
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    colorBars[index].number.toString(),
-                    style: const TextStyle(
-                      color: Color.fromARGB(
-                          255, 9, 9, 9), // เพิ่มเงื่อนไขสีข้อความ
-                      fontSize: 16.0, // ขนาดข้อความ
-                    ),
-                  ),
+          Positioned(
+            top: 150,
+            left: 15,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  _reset();
+                },
+                icon: const Icon(
+                  Icons.history,
+                  color: Color.fromARGB(255, 38, 38, 40),
+                  size: 25,
                 ),
               ),
             ),
+          ),
+          Positioned(
+            top: 160,
+            left: 15,
+            child: Image.asset(
+              'assets/image/4resister4.png',
+              height: 110,
+            ),
+          ),
           for (int index = 0; index < colorBars.length; index++)
             Positioned(
               top: colorBars[index].pointY,
@@ -308,7 +222,6 @@ class _MyHomePageState extends State<Resisster4> {
                     }
                   }
 
-                  // Check if index is less than 10
                   if (index < 4) {
                     if (data != null &&
                         (data.colorscor == gold || data.colorscor == silver)) {
@@ -333,12 +246,9 @@ class _MyHomePageState extends State<Resisster4> {
                 onAccept: (dropColer) {
                   if (draggedCard != null) {
                     setState(() {
-                      final colerchang = dropColer.colorscor;
-                      final numberchang = dropColer.number;
-                      colorBars[index].colorscor = colerchang; //เปลี่ยนสี
-                      colorBars[index].number = numberchang; //เปลี่ยนเลข
-                      countzero =
-                          convertToZeroPaddedString(colorBars[3].number);
+                      colorBars[index].colorscor = dropColer.colorscor;
+                      colorBars[index].number = dropColer.number;
+                      countzero = convertToZeroString(colorBars[3].number);
 
                       sum = (colorBars[0].number == 0
                               ? ''
@@ -359,10 +269,37 @@ class _MyHomePageState extends State<Resisster4> {
                               ? ''
                               : countzero);
 
-                      convertedSum = convertToDesiredUnit(sum);
+                      convertedSum = convertToUnit(sum);
                     });
                   }
                 },
+              ),
+            ),
+          for (int index = 0; index < colorBars.length; index++)
+            Positioned(
+              top: 265,
+              left: colorBars[index].pointX,
+              child: Container(
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(182, 252, 251, 251),
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 0.5,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    colorBars[index].number.toString(),
+                    style: const TextStyle(
+                      color: Color.fromARGB(
+                          255, 9, 9, 9), // เพิ่มเงื่อนไขสีข้อความ
+                      fontSize: 16.0, // ขนาดข้อความ
+                    ),
+                  ),
+                ),
               ),
             ),
           Positioned(
@@ -372,7 +309,7 @@ class _MyHomePageState extends State<Resisster4> {
               width: 220, // กำหนดความกว้างของ Container
               height: 180, // กำหนดความสูงของ Container
               decoration: BoxDecoration(
-                color: Color.fromARGB(
+                color: const Color.fromARGB(
                     255, 255, 255, 255), // สีพื้นหลังของ Container
                 borderRadius:
                     BorderRadius.circular(10.0), // กำหนดขอบโค้งของ Container
@@ -401,7 +338,7 @@ class _MyHomePageState extends State<Resisster4> {
               width: 115, // กำหนดความกว้างของ Container
               height: 180, // กำหนดความสูงของ Container
               decoration: BoxDecoration(
-                color: Color.fromARGB(
+                color: const Color.fromARGB(
                     255, 252, 252, 251), // สีพื้นหลังของ Container
                 borderRadius:
                     BorderRadius.circular(10.0), // กำหนดขอบโค้งของ Container
@@ -414,7 +351,7 @@ class _MyHomePageState extends State<Resisster4> {
                 alignment:
                     Alignment.topCenter, // จัดตำแหน่งข้อความด้านบนตรงกลาง
                 child: Text(
-                  '%Error',
+                  '%ERROR',
                   style: TextStyle(
                     color: Color.fromARGB(255, 6, 6, 6),
                     fontSize: 16,
@@ -433,24 +370,21 @@ class _MyHomePageState extends State<Resisster4> {
                   width: slcolorBars[index].widthColorBar - 5,
                   height: slcolorBars[index].heightColorBar + 20,
                   decoration: BoxDecoration(
-                    color:
-                        slcolorBars[index].colorscor, // สีพื้นหลังของ Container
-                    borderRadius: BorderRadius.circular(
-                        10.0), // กำหนดขอบโค้งของ Container
+                    color: slcolorBars[index].colorscor,
+                    borderRadius: BorderRadius.circular(10.0),
                     border: Border.all(
-                      color: Colors.black, // สีขอบ
-                      width: 3, // ความหนาขอบ
+                      color: Colors.black,
+                      width: 3,
                     ),
                   ),
-                  // ignore: sort_child_properties_last
                   child: Center(
                     child: Text(
                       slcolorBars[index].number.toString(),
                       style: TextStyle(
                         color: slcolorBars[index].number == 0
                             ? Colors.white
-                            : Colors.black, // เพิ่มเงื่อนไขสีข้อความ
-                        fontSize: 16.0, // ขนาดข้อความ
+                            : Colors.black,
+                        fontSize: 16.0,
                       ),
                     ),
                   ),
@@ -474,25 +408,67 @@ class _MyHomePageState extends State<Resisster4> {
                       style: TextStyle(
                         color: slcolorBars[index].number == 0
                             ? Colors.white
-                            : Colors.black, // เพิ่มเงื่อนไขสีข้อความ
-                        fontSize: 16.0, // ขนาดข้อความ
+                            : Colors.black,
+                        fontSize: 16.0,
                       ),
                     ),
                   ),
                 ),
               ),
             ),
+          Positioned(
+            top: 550,
+            left: 120,
+            child: ElevatedButton(
+              onPressed: () {
+                _game4();
+              },
+              child: const Text('ทำแบบทดสอบ'),
+            ),
+          ),
         ],
       ),
     );
   }
+
+  void _toggleLight() {
+    setState(() {
+      light = light;
+    });
+    if (light) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (context) => const Resiter3(title: 'Calculated resistor')),
+        (route) => false,
+      );
+    }
+  }
+
+  void _reset() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => const Resisster4(
+                title: 'Calculated resistor',
+              )),
+    );
+  }
+
+  void _game4() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => const Game4(title: 'Mini Geme'),
+      ),
+      (route) => true,
+    );
+  }
 }
 
-String convertToZeroPaddedString(int number) {
+String convertToZeroString(int number) {
   return '0' * number;
 }
 
-String convertToDesiredUnit(String input) {
+String convertToUnit(String input) {
   double? value = double.tryParse(input);
 
   if (value != null) {
@@ -532,11 +508,9 @@ class _SwitchExampleState extends State<SwitchExample> {
   @override
   Widget build(BuildContext context) {
     return Switch(
-      // This bool value toggles the switch.
       value: light,
       activeColor: const Color.fromARGB(255, 14, 13, 13),
       onChanged: (bool value) {
-        // This is called when the user toggles the switch.
         setState(() {
           light = value;
         });

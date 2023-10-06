@@ -55,15 +55,15 @@ class _MyHomePageState1 extends State<Game3> {
   List<ColorBar> slcolorBars = [];
   List<ColorBar2> colorBars2 = [];
 
-  ColorBar? draggedCard;
-  ColorBar? emptySpace;
   String sum = '';
   String sumfake = '';
 
   String convertedSum = '0';
   String convertedSumfake = '0';
+
   String countzero = '';
   String countzerofake = '';
+
   Random random = Random();
 
   Color empcoler = const Color.fromARGB(255, 208, 205, 205);
@@ -77,12 +77,9 @@ class _MyHomePageState1 extends State<Game3> {
   Color purple = const Color.fromARGB(255, 181, 5, 251);
   Color gray = const Color.fromARGB(255, 91, 91, 91);
   Color white = const Color.fromARGB(255, 255, 255, 255);
-
   Color gold = const Color.fromARGB(255, 203, 144, 5);
-
   Color silver = const Color.fromARGB(255, 192, 192, 192);
-
-  Color not = Color.fromARGB(255, 60, 15, 15);
+  Color not = const Color.fromARGB(255, 60, 15, 15);
 
   @override
   void initState() {
@@ -97,10 +94,7 @@ class _MyHomePageState1 extends State<Game3> {
     int random5 = myRandomObject.RandomNumber2();
     int random6 = myRandomObject.RandomNumber2();
     int random7 = myRandomObject.RandomNumber2();
-
-    int random9 = myRandomObject.RandomNumber1();
-    int random10 = myRandomObject.RandomNumber1();
-    int random11 = myRandomObject.RandomNumber1();
+    int random8 = myRandomObject.RandomNumber4_6();
 
     colorBars2.add(ColorBar2(black, 0));
     colorBars2.add(ColorBar2(brown, 1));
@@ -112,12 +106,11 @@ class _MyHomePageState1 extends State<Game3> {
     colorBars2.add(ColorBar2(purple, 7));
     colorBars2.add(ColorBar2(gray, 8));
     colorBars2.add(ColorBar2(white, 9));
-    colorBars2.add(ColorBar2(not, random2));
-    colorBars2.add(ColorBar2(not, random3));
-    colorBars2.add(ColorBar2(not, random4));
-    colorBars2.add(ColorBar2(not, random4));
-    colorBars2.add(ColorBar2(not, random3));
-    //  this.pointX,this.pointY,this.widthColorBar,this.heightColorBar,
+
+    colorBars2.add(ColorBar2(not, random8));
+    colorBars2.add(ColorBar2(not, random8));
+    colorBars2.add(ColorBar2(not, random8));
+
     colorBars.add(ColorBar(115, 155 + 20, 22, 81.8,
         colorBars2[random1].colorscor2, colorBars2[random1].number2));
     colorBars.add(ColorBar(158, 164 + 20, 22, 63.5,
@@ -133,23 +126,21 @@ class _MyHomePageState1 extends State<Game3> {
         22,
         81.8,
         colorBars2[random1].colorscor2,
-        colorBars2[random1 + random5 + random9].number2));
+        colorBars2[random1 + random5 + 1].number2));
     colorBarsfake.add(ColorBar(
         158,
         164 + 20,
         22,
         63.5,
         colorBars2[random2].colorscor2,
-        colorBars2[random2 + random6 + random10].number2));
+        colorBars2[random2 - random6 + 1].number2));
     colorBarsfake.add(ColorBar(
         195,
         164 + 20,
         22,
         63.5,
         colorBars2[random3].colorscor2,
-        colorBars2[random3 + random7 + random11].number2));
-    colorBarsfake.add(ColorBar(235, 155 + 20, 22, 81.8,
-        colorBars2[random4].colorscor2, colorBars2[random4].number2));
+        colorBars2[random3 + random7 + 1].number2));
 
     countzero = convertToZeroPaddedString(colorBars[2].number);
     countzerofake = convertToZeroPaddedString(colorBarsfake[2].number);
@@ -173,7 +164,7 @@ class _MyHomePageState1 extends State<Game3> {
     } else {
       sum += countzero;
     }
-/////////////////////
+//fake
     if (colorBarsfake[0].number == 0) {
       sumfake = '';
     } else {
@@ -194,8 +185,133 @@ class _MyHomePageState1 extends State<Game3> {
       sumfake += countzerofake;
     }
 
-    convertedSum = convertToDesiredUnit(sum);
-    convertedSumfake = convertToDesiredUnit(sumfake);
+    convertedSum = convertToUnit(sum);
+    convertedSumfake = convertToUnit(sumfake);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double top1, top2;
+    if (random.nextBool()) {
+      top1 = 350;
+      top2 = 430;
+    } else {
+      top1 = 430;
+      top2 = 350;
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text(widget.title),
+      ),
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 40,
+            child: Container(
+              width: 300,
+              height: 50,
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 50, 38, 54),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0),
+                ),
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                'เลือกคำตอบที่ถูกต้อง',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 254, 254, 254),
+                  fontSize: 18.0,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 150,
+            left: 15,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  _reset();
+                },
+                icon: const Icon(
+                  Icons.history,
+                  color: Color.fromARGB(255, 38, 38, 40),
+                  size: 25,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 160,
+            left: 15,
+            child: Container(
+              child: Image.asset(
+                'assets/image/3resister3.png',
+                height: 110,
+              ),
+            ),
+          ),
+          for (int index = 0; index < colorBars.length; index++)
+            Positioned(
+              top: colorBars[index].pointY, // Use the Y position from colorBars
+              left:
+                  colorBars[index].pointX, // Use the X position from colorBars
+              child: Container(
+                width: colorBars[index].widthColorBar,
+                height: colorBars[index].heightColorBar,
+                decoration: BoxDecoration(
+                  color: colorBars[index].colorscor,
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 0.5,
+                  ),
+                ),
+              ),
+            ),
+          Positioned(
+            top: top2,
+            left: 58,
+            child: SizedBox(
+              width: 250,
+              height: 40,
+              child: ElevatedButton(
+                onPressed: () {
+                  _true();
+                },
+                child: Text(
+                  '$convertedSum  Ω',
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: top1,
+            left: 58,
+            child: SizedBox(
+              width: 250,
+              height: 40,
+              child: ElevatedButton(
+                onPressed: () {
+                  _false();
+                },
+                child: Text(
+                  '$convertedSumfake  Ω',
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _true() {
@@ -214,7 +330,7 @@ class _MyHomePageState1 extends State<Game3> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
                 Navigator.pushReplacement(
@@ -249,7 +365,7 @@ class _MyHomePageState1 extends State<Game3> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
                 Navigator.pushReplacement(
@@ -277,145 +393,6 @@ class _MyHomePageState1 extends State<Game3> {
               )),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    double top1, top2;
-    if (random.nextBool()) {
-      top1 = 350;
-      top2 = 430;
-    } else {
-      top1 = 430;
-      top2 = 350;
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text(widget.title),
-      ),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 40,
-            child: Container(
-              width: 300,
-              height: 50,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 50, 38, 54), // สีพื้นหลัง
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20.0), // ขอบโค้งด้านล่างซ้าย
-                  bottomRight: Radius.circular(20.0), // ขอบโค้งด้านล่างขวา
-                ), // กำหนดขอบโค้งของ Container
-              ),
-              // กำหนดให้ข้อความอยู่กลางแนวนอนและแนวตั้ง
-              alignment: Alignment.center,
-              child: const Text(
-                'เลือกคำตอบที่ถูกต้อง',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 254, 254, 254), // สีข้อความ
-                  fontSize: 18.0, // ขนาดข้อความ
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 150,
-            left: 15,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255), // สีพื้นหลังของปุ่ม
-                shape: BoxShape
-                    .circle, // กำหนดรูปร่างของพื้นหลัง (ในกรณีนี้ใช้วงกลม)
-              ),
-              child: IconButton(
-                onPressed: () {
-                  // โค้ดเมื่อปุ่มถูกกด
-                  _reset();
-                },
-                icon: const Icon(
-                  Icons.history, // เลือกไอคอนที่คุณต้องการ
-                  color: Color.fromARGB(255, 38, 38, 40), // สีของไอคอน
-                  size: 25, // ขนาดของไอคอน
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 160,
-            left: 15,
-            child: Container(
-              child: Image.asset(
-                'assets/image/3resister3.png',
-                height: 110,
-              ),
-            ),
-          ),
-          Positioned(
-            top: top2,
-            left: 58,
-            child: Container(
-              width: 250,
-              height: 40,
-              child: ElevatedButton(
-                onPressed: () {
-                  // โค้ดเมื่อปุ่มถูกกด
-                  _true();
-                },
-                child: Text(
-                  '${convertedSum}  Ω',
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: top1,
-            left: 58,
-            child: Container(
-              width: 250,
-              height: 40,
-              child: ElevatedButton(
-                onPressed: () {
-                  // โค้ดเมื่อปุ่มถูกกด
-                  _false();
-                },
-                child: Text(
-                  '${convertedSumfake}  Ω',
-                ),
-              ),
-            ),
-          ),
-          for (int index = 0; index < colorBars.length; index++)
-            Positioned(
-              top: colorBars[index].pointY, // Use the Y position from colorBars
-              left:
-                  colorBars[index].pointX, // Use the X position from colorBars
-              child: Container(
-                width: colorBars[index].widthColorBar,
-                height: colorBars[index].heightColorBar,
-                decoration: BoxDecoration(
-                  color: colorBars[index].colorscor,
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 0.5,
-                  ),
-                ),
-                // child: Center(
-                //   child: Text(
-                //     colorBars[index].number.toString(),
-                //     style: const TextStyle(
-                //       color: Colors.black,
-                //       fontSize: 16.0,
-                //     ),
-                //   ),
-                // ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
 }
 
 class MyRandomClass {
@@ -431,9 +408,9 @@ class MyRandomClass {
     return randomNumber;
   }
 
-  int RandomNumber1() {
-    int randomNumber1 = random.nextInt(1) + 1;
-    return randomNumber1;
+  int RandomNumber4_6() {
+    int randomNumber = random.nextInt(6) + 4;
+    return randomNumber;
   }
 }
 
@@ -441,7 +418,7 @@ String convertToZeroPaddedString(int number) {
   return '0' * number;
 }
 
-String convertToDesiredUnit(String input) {
+String convertToUnit(String input) {
   double? value = double.tryParse(input);
 
   if (value != null) {

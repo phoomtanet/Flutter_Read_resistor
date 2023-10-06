@@ -62,6 +62,7 @@ class _MyHomePageState1 extends State<Game4> {
 
   String convertedSum = '0';
   String convertedSumfake = '0';
+  String convertedSumfake2 = '0';
   String countzero = '';
   String countzerofake = '';
   Random random = Random();
@@ -99,10 +100,7 @@ class _MyHomePageState1 extends State<Game4> {
     int random7 = myRandomObject.RandomNumber2();
     int random8 = myRandomObject.RandomNumber2();
 
-    int random9 = myRandomObject.RandomNumber1();
-    int random10 = myRandomObject.RandomNumber1();
-    int random11 = myRandomObject.RandomNumber1();
-    int random12 = myRandomObject.RandomNumber1();
+    int random9 = myRandomObject.RandomNumber4_6();
 
     colorBars2.add(ColorBar2(black, 0));
     colorBars2.add(ColorBar2(brown, 1));
@@ -114,11 +112,10 @@ class _MyHomePageState1 extends State<Game4> {
     colorBars2.add(ColorBar2(purple, 7));
     colorBars2.add(ColorBar2(gray, 8));
     colorBars2.add(ColorBar2(white, 9));
-    colorBars2.add(ColorBar2(not, random2));
-    colorBars2.add(ColorBar2(not, random3));
-    colorBars2.add(ColorBar2(not, random4));
-    colorBars2.add(ColorBar2(not, random4));
-    colorBars2.add(ColorBar2(not, random3));
+    colorBars2.add(ColorBar2(not, random9));
+    colorBars2.add(ColorBar2(not, random9));
+    colorBars2.add(ColorBar2(not, random9));
+
     //  this.pointX,this.pointY,this.widthColorBar,this.heightColorBar,
 
     colorBars.add(ColorBar(100, 154 + 20, 22, 84.5,
@@ -137,21 +134,21 @@ class _MyHomePageState1 extends State<Game4> {
         22,
         81.8,
         colorBars2[random1].colorscor2,
-        colorBars2[random1 + random5 + random9].number2));
+        colorBars2[random1 + random5 + 1].number2));
     colorBarsfake.add(ColorBar(
         158,
         164 + 20,
         22,
         63.5,
         colorBars2[random2].colorscor2,
-        colorBars2[random2 + random6 + random10].number2));
+        colorBars2[random2 + random6 + 1].number2));
     colorBarsfake.add(ColorBar(
         195,
         164 + 20,
         22,
         63.5,
         colorBars2[random3].colorscor2,
-        colorBars2[random3 + random7 + random11].number2));
+        colorBars2[random3 + random7 + 1].number2));
 
     colorBarsfake.add(ColorBar(
         235,
@@ -159,10 +156,10 @@ class _MyHomePageState1 extends State<Game4> {
         22,
         81.8,
         colorBars2[random4].colorscor2,
-        colorBars2[random4 + random8 + random12].number2));
+        colorBars2[random4 + random8 + 1].number2));
 
-    countzero = convertToZeroPaddedString(colorBars[3].number);
-    countzerofake = convertToZeroPaddedString(colorBarsfake[3].number);
+    countzero = convertToZeroString(colorBars[3].number);
+    countzerofake = convertToZeroString(colorBarsfake[3].number);
 
     if (colorBars[0].number == 0) {
       sum += '';
@@ -283,51 +280,6 @@ class _MyHomePageState1 extends State<Game4> {
           ],
         );
       },
-    );
-  }
-
-  void _false() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: const Color.fromARGB(255, 244, 244, 244),
-          title: Text(
-            '$convertedSumfake Ω เป็นคำตอบที่ผิด!!!! \nคำตอบที่ถูกคือ $convertedSum Ω',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16.0, // ขนาดตัวอักษร
-              color: Color.fromARGB(255, 237, 0, 0), // สีตัวอักษร
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const Game4(
-                      title: 'Mini Game',
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _reset() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (BuildContext context) => const Game4(
-                title: 'Mini Game',
-              )),
     );
   }
 
@@ -469,6 +421,51 @@ class _MyHomePageState1 extends State<Game4> {
       ),
     );
   }
+
+  void _false() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 244, 244, 244),
+          title: Text(
+            '$convertedSumfake Ω เป็นคำตอบที่ผิด!!!! \nคำตอบที่ถูกคือ $convertedSum Ω',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 16.0, // ขนาดตัวอักษร
+              color: Color.fromARGB(255, 237, 0, 0), // สีตัวอักษร
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const Game4(
+                      title: 'Mini Game',
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _reset() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => const Game4(
+                title: 'Mini Game',
+              )),
+    );
+  }
 }
 
 class MyRandomClass {
@@ -484,13 +481,13 @@ class MyRandomClass {
     return randomNumber;
   }
 
-  int RandomNumber1() {
-    int randomNumber1 = random.nextInt(1) + 1;
-    return randomNumber1;
+  int RandomNumber4_6() {
+    int randomNumber = random.nextInt(6) + 4;
+    return randomNumber;
   }
 }
 
-String convertToZeroPaddedString(int number) {
+String convertToZeroString(int number) {
   return '0' * number;
 }
 
