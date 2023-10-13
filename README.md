@@ -1,7 +1,9 @@
-# resister
+
 โปรเจค โปรแกรม  อ่านค่า ความต้านทานจากแทบ สีตัวต้านทาน
 และมีแบบทดสอบความเข้าใจ
 โดยเขียนบน Flutter 
+
+# resister
 ![r5](https://github.com/phoomtanet/dart_minipj/assets/143348885/8efc0510-ec1f-4a50-bae6-519698f8ac4e)!
 ![r3color](https://github.com/phoomtanet/dart_minipj/assets/143348885/56dba9a3-e14e-4604-8ee3-67d739fffeee)
 ![r4color](https://github.com/phoomtanet/dart_minipj/assets/143348885/c36a3144-868c-423a-818b-29730b90a2f5)
